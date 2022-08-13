@@ -1,13 +1,12 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function SingIn() {
+function SignUp() {
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
-  const [form, setForm] = useState({
-    email: id,
-    password: password,
-  });
+  const navigate = useNavigate();
+
   const inputId = (e) => {
     setId(e.target.value);
     console.log(e.target.value);
@@ -16,7 +15,10 @@ function SingIn() {
   const inputPassword = (e) => {
     setPassword(e.target.value);
   };
-  const submitsignin = async (e) => {
+
+  const loginValid = id.includes("@") && password.length >= 8;
+
+  const submitsignup = async (e) => {
     const form = {
       email: id,
       password: password,
@@ -35,6 +37,7 @@ function SingIn() {
       .then((res) => {
         console.log(res);
         localStorage.setItem("accessToken", res.data.access_token);
+        navigate("/signin");
       })
       .catch((Error) => {
         console.log(Error);
@@ -44,9 +47,9 @@ function SingIn() {
     <div>
       <input type="text" onChange={inputId} placeholder="e-mail" />
       <input type="password" onChange={inputPassword} placeholder="password" />
-      <button onClick={submitsignin}>가입하기</button>
+      {loginValid ? <button onClick={submitsignup}>가입하기</button> : null}
     </div>
   );
 }
 
-export default SingIn;
+export default SignUp;
