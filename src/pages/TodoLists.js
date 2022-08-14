@@ -5,19 +5,24 @@ import axios from "axios";
 function TodoList({ list }) {
   const [isDone, setisDone] = useState(false);
   const [switchValue, setSwitchValue] = useState([]);
-  const [inputVal, setinputVal] = useState(list.isCompleted);
+
   const [btnCancle, setbtnCancle] = useState(true);
+  const [cancelVal, setCancleVal] = useState(true);
   const [BtnValue, setBtnValue] = useState(true);
   const [editVal, setEditVal] = useState("");
   const [word, setWord] = useState(list);
   const [listitem, setlist] = useState(list.todo);
+  const [inputVal, setinputVal] = useState(list.isCompleted);
+
   const formEdit = () => {
     setinputVal(!inputVal);
     console.log(inputVal);
   };
-
+  //취소버튼 숨기기
   const cancle = () => {
-    setbtnCancle(!btnCancle);
+    setBtnValue(true);
+    setisDone(!isDone);
+    setSwitchValue([false]);
   };
 
   //수정
@@ -109,7 +114,7 @@ function TodoList({ list }) {
                 onEdit();
               }}
             >
-              확인
+              제출
             </ViewBtn>
           )}
           {isDone ? <CancleBtn onClick={cancle}>취소</CancleBtn> : null}

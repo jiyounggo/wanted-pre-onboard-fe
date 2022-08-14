@@ -28,7 +28,9 @@ function Todo() {
       });
   }, [word]);
 
+  //글작성
   const onSubmit = (e) => {
+    e.preventDefault();
     const form = {
       todo: listVal,
     };
@@ -58,8 +60,10 @@ function Todo() {
       <>
         <h2>Todolist</h2>
         <list>
-          <input onChange={inputTest}></input>
-          <button onClick={onSubmit}>+</button>
+          <form onChange={inputTest}>
+            <input></input>
+            <button onClick={onSubmit}>추가</button>
+          </form>
           <table>
             <tbody>
               {value.map((list) => (
