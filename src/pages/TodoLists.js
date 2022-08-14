@@ -2,68 +2,50 @@ import React, { useCallback, useContext, useEffect, useState } from "react";
 import styled from "@emotion/styled";
 import axios from "axios";
 
-function Todo() {
-  const [isShow, setShow] = useState(false);
+function TodoList({ list }) {
+  const [isShow, setShow] = useState([]);
   const [day, setday] = useState([]);
   const [isDone, setisDone] = useState(false);
-  const [inputval, setinputval] = useState(false);
-  useEffect(() => {
-    axios
-      .get(
-        " https://5co7shqbsf.execute-api.ap-northeast-2.amazonaws.com/production/todos",
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer  ${localStorage.getItem("accessToken")}`,
-          },
-        }
-      )
-      .then((res) => {
-        console.log(res.data);
-        setday(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, []);
+  const [switchValue, setSwitchValue] = useState([]);
+  const [inputVal, setinputVal] = useState(list.isCompleted);
+  const [listVal, setListVal] = useState(list.isCompleted);
 
-  const toggleDone = () => {
-    setShow(!isShow);
-  };
-
-  const BtnSwitch = () => {
-    setinputval(!inputval);
-    console.log(inputval);
-    // setisDone(!isDone);
+  const formEdit = () => {
+    setinputVal(!inputVal);
   };
   return (
-    <>
-      <h2>Todolist</h2>
-      <Todolist>
-        <table>
-          <tbody>
-            <tr className={isShow ? "show" : ""}>
-              <td>
-                <input type="checkbox" checked={isShow} onChange={toggleDone} />
-              </td>
-              <div>
-                {inputval ? <input defaultValue={"안녕"}></input> : <p>안녕</p>}
-              </div>
-
-              <td>
-                <ViewBtn onClick={BtnSwitch}>수정</ViewBtn>
-                {isDone ? <CancleBtn>취소</CancleBtn> : null}
-                <DeleteBtn>삭제</DeleteBtn>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </Todolist>
-    </>
+    <Todolist>
+      <tr key={list.id} className={inputVal ? "show" : ""}>
+        <td>
+          <input type="checkbox" checked={inputVal} onChange={formEdit} />
+        </td>
+        <div>
+          {switchValue[list.id] ? (
+            <input defaultValue={list.todo}></input>
+          ) : (
+            <p>{list.todo}</p>
+          )}
+        </div>
+        <td>
+          <ViewBtn
+            onClick={() => {
+              let copy = [...switchValue];
+              copy[list.id] = !copy[list.id];
+              setSwitchValue(copy);
+            }}
+          >
+            수정
+          </ViewBtn>
+          {isDone ? <CancleBtn>취소</CancleBtn> : null}
+          <DeleteBtn>삭제</DeleteBtn>
+        </td>
+      </tr>
+    </Todolist>
   );
 }
 const Todolist = styled.div`
-  width: 100%;
+  max-width: 1000px;
+  width: 600px;
   margin: 0 auto;
   table {
     border: 1.3px solid pink;
@@ -82,4 +64,4 @@ const ViewBtn = styled.button``;
 const CancleBtn = styled.button``;
 const DeleteBtn = styled.button``;
 
-export default Todo;
+export default TodoList;
