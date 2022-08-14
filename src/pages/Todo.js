@@ -3,43 +3,37 @@ import styled from "@emotion/styled";
 import axios from "axios";
 import TodoList from "./TodoLists";
 function Todo() {
-  const [isShow, setShow] = useState([]);
-  const [day, setday] = useState([]);
-  const [isDone, setisDone] = useState(false);
-  const [switchValue, setSwitchValue] = useState([]);
-  const [inputVal, setinputVal] = useState("");
-  const [listVal, setListVal] = useState("");
+  const [value, setValue] = useState([]);
+  const [listVal, setListVal] = useState();
+  const [word, setWord] = useState(true);
 
+  const inputTest = (e) => {
+    setListVal(e.target.value);
+  };
   useEffect(() => {
     axios
       .get(
         " https://5co7shqbsf.execute-api.ap-northeast-2.amazonaws.com/production/todos",
         {
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer  ${localStorage.getItem("accessToken")}`,
           },
         }
       )
       .then((res) => {
-        setday(res.data);
-        console.log(day);
+        setValue(res.data);
       })
       .catch((error) => {
         console.log(error);
       });
-  }, []);
+  }, [word]);
 
-  const inputTest = (e) => {
-    setListVal(e.target.value);
-    console.log(listVal);
-  };
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     const form = {
       todo: listVal,
     };
     e.preventDefault();
-    await axios
+    axios
       .post(
         "https://5co7shqbsf.execute-api.ap-northeast-2.amazonaws.com/production/todos",
         form,
@@ -52,6 +46,7 @@ function Todo() {
       )
       .then((res) => {
         console.log(res.data);
+        setWord(!word);
       })
       .catch((error) => {
         console.log(error);
@@ -67,7 +62,7 @@ function Todo() {
           <button onClick={onSubmit}>+</button>
           <table>
             <tbody>
-              {day.map((list, i) => (
+              {value.map((list) => (
                 <TodoList list={list} />
               ))}
             </tbody>
