@@ -30,26 +30,6 @@ function Todo() {
       });
   }, []);
 
-  // const formEditBtn = async (e) => {
-  //   const form = {
-  //     todo: { inputVal },
-  //   };
-  //   e.preventDefault();
-  //   await axios
-  //     .post(
-  //       "https://5co7shqbsf.execute-api.ap-northeast-2.amazonaws.com/production/todos",
-  //       form,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer  ${localStorage.getItem("accessToken")}`,
-  //           "Content-Type": "application/json",
-  //         },
-  //       }
-  //     )
-  //     .then((res) => {})
-  //     .catch((error) => {});
-  // };
-
   const inputTest = (e) => {
     setListVal(e.target.value);
     console.log(listVal);

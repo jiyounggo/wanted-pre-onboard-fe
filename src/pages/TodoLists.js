@@ -3,15 +3,17 @@ import styled from "@emotion/styled";
 import axios from "axios";
 
 function TodoList({ list }) {
-  const [isShow, setShow] = useState([]);
-  const [day, setday] = useState([]);
   const [isDone, setisDone] = useState(false);
   const [switchValue, setSwitchValue] = useState([]);
   const [inputVal, setinputVal] = useState(list.isCompleted);
-  const [listVal, setListVal] = useState(list.isCompleted);
-
+  const [btnCancle, setbtnCancle] = useState(true);
+  const [BtnValue, setBtnValue] = useState(true);
   const formEdit = () => {
     setinputVal(!inputVal);
+  };
+
+  const cancle = () => {
+    setbtnCancle(!btnCancle);
   };
   return (
     <Todolist>
@@ -27,16 +29,33 @@ function TodoList({ list }) {
           )}
         </div>
         <td>
-          <ViewBtn
-            onClick={() => {
-              let copy = [...switchValue];
-              copy[list.id] = !copy[list.id];
-              setSwitchValue(copy);
-            }}
-          >
-            수정
-          </ViewBtn>
-          {isDone ? <CancleBtn>취소</CancleBtn> : null}
+          {BtnValue ? (
+            <ViewBtn
+              onClick={() => {
+                let copy = [...switchValue];
+                copy[list.id] = !copy[list.id];
+                setSwitchValue(copy);
+                setisDone(!isDone);
+                setBtnValue(!BtnValue);
+              }}
+            >
+              수정
+            </ViewBtn>
+          ) : (
+            <ViewBtn
+              onClick={() => {
+                let copy = [...switchValue];
+                copy[list.id] = !copy[list.id];
+                setSwitchValue(copy);
+                setisDone(!isDone);
+                setBtnValue(!BtnValue);
+              }}
+            >
+              확인
+            </ViewBtn>
+          )}
+          {isDone ? <CancleBtn onClick={cancle}>취소</CancleBtn> : null}
+
           <DeleteBtn>삭제</DeleteBtn>
         </td>
       </tr>
@@ -44,18 +63,18 @@ function TodoList({ list }) {
   );
 }
 const Todolist = styled.div`
-  max-width: 1000px;
-  width: 600px;
-  margin: 0 auto;
-  table {
-    border: 1.3px solid pink;
-    border-collapse: collapse;
-  }
-  tr,
-  td {
-    test-align: center;
-    border: 1.2px solid pink;
-  }
+  // max-width: 1000px;
+  // width: 600px;
+  // margin: 0 auto;
+  // table {
+  //   border: 1.3px solid pink;
+  //   border-collapse: collapse;
+  // }
+  // tr,
+  // td {
+  //   test-align: center;
+  //   border: 1.2px solid pink;
+  // }
   .show {
     background-color: #f0f0f0;
   }
