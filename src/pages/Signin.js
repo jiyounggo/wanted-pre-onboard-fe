@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function Signin() {
   const [id, setId] = useState("");
@@ -42,6 +42,8 @@ function Signin() {
           alert("유효하지 않는 사용자 입니다.");
         } else if (error.request.status === 401) {
           alert("사용자 정보가 일치하지 않습니다.");
+        } else {
+          alert("다시 확인해 주세요.");
         }
       });
   };
@@ -50,7 +52,7 @@ function Signin() {
     <div>
       <input type="text" onChange={inputId} placeholder="e-mail" />
       <input type="password" onChange={inputPassword} placeholder="password" />
-      <button onClick={submitsignin}>가입하기</button>
+      <button onClick={submitsignin}>로그인</button>
     </div>
   );
 }

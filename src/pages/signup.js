@@ -1,27 +1,42 @@
 import axios from "axios";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import styled from "@emotion/styled";
 
 function SignUp() {
-  const [id, setId] = useState("");
-  const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  // const [id, setId] = useState("");
+  // const [password, setPassword] = useState("");
+  const [input, setInput] = useState({
+    signupId: "",
+    signupPw: "",
+  });
 
-  const inputId = (e) => {
-    setId(e.target.value);
-    console.log(e.target.value);
+  const { signupId, signupPw } = input;
+
+  const onChangeInput = (e) => {
+    const { name, value } = e.target;
+    setInput({
+      ...input,
+      [name]: value,
+    });
   };
 
-  const inputPassword = (e) => {
-    setPassword(e.target.value);
-  };
+  // const inputId = (e) => {
+  //   setId(e.target.value);
+  // };
 
-  const loginValid = id.includes("@") && password.length >= 8;
+  // const inputPassword = (e) => {
+  //   setPassword(e.target.value);
+  // };
 
+  const loginValid = input.signupId.includes("@") && input.signupPw.length >= 8;
+  const emailValid = input.signupId.includes("@");
+  const pwValud = input.signupPw.length >= 8;
   const submitsignup = async (e) => {
     const form = {
-      email: id,
-      password: password,
+      email: input.signupId,
+      password: input.signupPw,
     };
     e.preventDefault();
     await axios
@@ -44,12 +59,81 @@ function SignUp() {
       });
   };
   return (
-    <div>
-      <input type="text" onChange={inputId} placeholder="e-mail" />
-      <input type="password" onChange={inputPassword} placeholder="password" />
-      {loginValid ? <button onClick={submitsignup}>가입하기</button> : null}
-    </div>
+    <Signup>
+      <div className="top">
+        <h2>sign in</h2>
+        <input
+          name="signupId"
+          type="text"
+          onChange={onChangeInput}
+          placeholder="e-mail"
+          value={signupId}
+        />
+        <input
+          name="signupPw"
+          type="password"
+          onChange={onChangeInput}
+          placeholder="password"
+          value={signupPw}
+        />
+      </div>
+      <div className="middle">
+        {!emailValid ? (
+          <p>이메일은 @ 가 포함되어야 합니다</p>
+        ) : !pwValud ? (
+          <p>비밀번호는 8글자 이상 이여야 합니다</p>
+        ) : (
+          <p></p>
+        )}
+      </div>
+      <div className="signBtn">
+        <button
+          className={loginValid ? "onClick" : "unClick"}
+          onClick={submitsignup}
+        >
+          가입하기
+        </button>
+      </div>
+
+      <Link to="/signin">
+        <p className="bottom">로그인 하러 가기</p>
+      </Link>
+    </Signup>
   );
 }
+
+const Signup = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 90vh;
+  flex-direction: column;
+  .top {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+  .middle {
+    height: 50px;
+    p {
+      font-size: 5px;
+      color: red;
+    }
+  }
+
+  .onClick {
+    background-color: pink;
+    cursor: pointer;
+    border: 1px solid white;
+    padding: 5px;
+  }
+  .unClick {
+    pointer-events: none;
+    boder: 1px solid black;
+  }
+  .bottom {
+    font-size: 13px;
+  }
+`;
 
 export default SignUp;

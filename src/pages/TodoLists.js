@@ -1,13 +1,10 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useState } from "react";
 import styled from "@emotion/styled";
 import axios from "axios";
 
 function TodoList({ list }) {
   const [isDone, setisDone] = useState(false);
   const [switchValue, setSwitchValue] = useState([]);
-
-  const [btnCancle, setbtnCancle] = useState(true);
-  const [cancelVal, setCancleVal] = useState(true);
   const [BtnValue, setBtnValue] = useState(true);
   const [editVal, setEditVal] = useState("");
   const [word, setWord] = useState(list);
@@ -16,8 +13,8 @@ function TodoList({ list }) {
 
   const formEdit = () => {
     setinputVal(!inputVal);
-    console.log(inputVal);
   };
+
   //취소버튼 숨기기
   const cancle = () => {
     setBtnValue(true);
@@ -43,7 +40,6 @@ function TodoList({ list }) {
         }
       )
       .then((res) => {
-        console.log(res.data);
         setlist(res.data.todo);
       })
       .catch((error) => {
@@ -63,7 +59,6 @@ function TodoList({ list }) {
         }
       )
       .then((res) => {
-        console.log(res);
         setWord({ id: 0 });
       })
       .catch((error) => {
@@ -75,22 +70,26 @@ function TodoList({ list }) {
   }
   const inputTxt = (e) => {
     setEditVal(e.target.value);
-    console.log(editVal);
   };
   return (
     <Todolist>
-      <tr key={list.id} className={inputVal ? "show" : ""}>
-        <td>
-          <input type="checkbox" checked={inputVal} onChange={formEdit} />
-        </td>
-        <div>
+      <ul key={list.id} className={inputVal ? "show" : ""}>
+        <li>
+          <input
+            className="checkbox"
+            type="checkbox"
+            checked={inputVal}
+            onChange={formEdit}
+          />
+        </li>
+        <div className="text">
           {switchValue[list.id] ? (
             <input onChange={inputTxt} defaultValue={listitem}></input>
           ) : (
             <p>{listitem}</p>
           )}
         </div>
-        <td>
+        <li>
           {BtnValue ? (
             <ViewBtn
               onClick={() => {
@@ -118,28 +117,39 @@ function TodoList({ list }) {
             </ViewBtn>
           )}
           {isDone ? <CancleBtn onClick={cancle}>취소</CancleBtn> : null}
-
-          <DeleteBtn onClick={onDel}>삭제</DeleteBtn>
-        </td>
-      </tr>
+          {BtnValue ? <DeleteBtn onClick={onDel}>삭제</DeleteBtn> : null}
+        </li>
+      </ul>
     </Todolist>
   );
 }
 const Todolist = styled.div`
-  // max-width: 1000px;
-  // width: 600px;
-  // margin: 0 auto;
-  // table {
-  //   border: 1.3px solid pink;
-  //   border-collapse: collapse;
-  // }
-  // tr,
-  // td {
-  //   test-align: center;
-  //   border: 1.2px solid pink;
-  // }
   .show {
-    background-color: #f0f0f0;
+    text-decoration: line-through;
+    text-decoration-color: pink;
+  }
+  ul {
+    border: 1.3px solid pink;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .checkbox {
+    accent-color: pink;
+  }
+  .text {
+    width: 500px;
+
+    p {
+      margin: 0;
+    }
+    input {
+      width: 450px;
+      height: 20px;
+      font-size: 1em;
+    }
   }
 `;
 const ViewBtn = styled.button``;

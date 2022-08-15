@@ -5,14 +5,13 @@ import SingIn from "./pages/Signin";
 import Todo from "./pages/Todo";
 function App() {
   return (
-    <div>
-      <Routes>
-        <Route path="/" element={<Main />} />
-        <Route path="/signin" element={<SingIn />} />
-        <Route path="/signup" element={<SingUp />} />
-        <Route path="/todo" element={<Todo />} />
-      </Routes>
-    </div>
+    <Routes>
+      <Route path="/" element={<Main />} />
+      <Route path="/signin" element={<SingIn />} />
+      <Route path="/signup" element={<SingUp />} />
+      <Route path="/todo" element={<Todo />} />
+      <Route path="*" element={<div>없는페이지 입니다</div>} />
+    </Routes>
   );
 }
 
