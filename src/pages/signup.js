@@ -1,12 +1,12 @@
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { signUp } from "../api";
 import styled from "@emotion/styled";
 
 function SignUp() {
   const navigate = useNavigate();
-  // const [id, setId] = useState("");
-  // const [password, setPassword] = useState("");
+
   const [input, setInput] = useState({
     signupId: "",
     signupPw: "",
@@ -22,35 +22,20 @@ function SignUp() {
     });
   };
 
-  // const inputId = (e) => {
-  //   setId(e.target.value);
-  // };
-
-  // const inputPassword = (e) => {
-  //   setPassword(e.target.value);
-  // };
-
+  //ID,PW 유효성 검사
   const loginValid = input.signupId.includes("@") && input.signupPw.length >= 8;
   const emailValid = input.signupId.includes("@");
   const pwValud = input.signupPw.length >= 8;
+
+  //회원가입 요청
   const submitsignup = async (e) => {
-    const form = {
+    const data = {
       email: input.signupId,
       password: input.signupPw,
     };
     e.preventDefault();
-    await axios
-      .post(
-        "https://5co7shqbsf.execute-api.ap-northeast-2.amazonaws.com/production/auth/signup",
-        form,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
+    signUp(data)
       .then((res) => {
-        console.log(res);
         localStorage.setItem("accessToken", res.data.access_token);
         navigate("/signin");
       })
@@ -58,6 +43,7 @@ function SignUp() {
         console.log(Error);
       });
   };
+
   return (
     <Signup>
       <div className="top">

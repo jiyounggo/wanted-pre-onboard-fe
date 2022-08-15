@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useState } from "react";
+import { signIn } from "../api";
 import { useNavigate, Link } from "react-router-dom";
 
 function Signin() {
@@ -16,22 +17,15 @@ function Signin() {
   const inputPassword = (e) => {
     setPassword(e.target.value);
   };
+
+  //로그인 요청
   const submitsignin = async (e) => {
-    const form = {
+    const data = {
       email: id,
       password: password,
     };
     e.preventDefault();
-    await axios
-      .post(
-        "https://5co7shqbsf.execute-api.ap-northeast-2.amazonaws.com/production/auth/signin",
-        form,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      )
+    signIn(data)
       .then((res) => {
         console.log(res);
         localStorage.setItem("accessToken", res.data.access_token);

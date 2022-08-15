@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import axios from "axios";
+import { updataTodo, deleteTodo } from "../api";
 
 function TodoList({ list }) {
   const [isDone, setisDone] = useState(false);
@@ -14,6 +14,9 @@ function TodoList({ list }) {
   const formEdit = () => {
     setinputVal(!inputVal);
   };
+  const inputTxt = (e) => {
+    setEditVal(e.target.value);
+  };
 
   //취소버튼 숨기기
   const cancle = () => {
@@ -24,21 +27,11 @@ function TodoList({ list }) {
 
   //수정
   const onEdit = async (e) => {
-    const form = {
+    const data = {
       todo: editVal,
       isCompleted: true,
     };
-    await axios
-      .put(
-        `https://5co7shqbsf.execute-api.ap-northeast-2.amazonaws.com/production/todos/${list.id}`,
-        form,
-        {
-          headers: {
-            Authorization: `Bearer  ${localStorage.getItem("accessToken")}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
+    updataTodo(data, word)
       .then((res) => {
         setlist(res.data.todo);
       })
@@ -49,15 +42,7 @@ function TodoList({ list }) {
 
   //삭제
   const onDel = async (e) => {
-    await axios
-      .delete(
-        `https://5co7shqbsf.execute-api.ap-northeast-2.amazonaws.com/production/todos/${list.id}`,
-        {
-          headers: {
-            Authorization: `Bearer  ${localStorage.getItem("accessToken")}`,
-          },
-        }
-      )
+    deleteTodo(word)
       .then((res) => {
         setWord({ id: 0 });
       })
@@ -65,12 +50,11 @@ function TodoList({ list }) {
         console.log(error);
       });
   };
+
   if (word.id === 0) {
     return null;
   }
-  const inputTxt = (e) => {
-    setEditVal(e.target.value);
-  };
+
   return (
     <Todolist>
       <ul key={list.id} className={inputVal ? "show" : ""}>

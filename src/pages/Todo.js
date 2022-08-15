@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
-import axios from "axios";
 import TodoList from "./TodoLists";
+import { getTodos, createTodo } from "../api";
 function Todo() {
   const [value, setValue] = useState([]);
   const [listVal, setListVal] = useState();
@@ -15,25 +15,19 @@ function Todo() {
     inputRef.current.focus();
   }, []);
 
+  //리다이렉트
   if (localStorage.getItem("accessToken") == null) {
     alert("로그인 해주세요!");
     navigate("/");
   }
+
   const inputTest = (e) => {
     setListVal(e.target.value);
   };
 
   //get 요청
   useEffect(() => {
-    axios
-      .get(
-        " https://5co7shqbsf.execute-api.ap-northeast-2.amazonaws.com/production/todos",
-        {
-          headers: {
-            Authorization: `Bearer  ${localStorage.getItem("accessToken")}`,
-          },
-        }
-      )
+    getTodos()
       .then((res) => {
         setValue(res.data);
       })
@@ -42,28 +36,17 @@ function Todo() {
       });
   }, [word]);
 
-  //글작성
+  //post 요청
   const onSubmit = (e) => {
     inputRef.current.focus();
     e.preventDefault();
     setListVal("");
-    const form = {
+    const data = {
       todo: listVal,
     };
     e.preventDefault();
-    axios
-      .post(
-        "https://5co7shqbsf.execute-api.ap-northeast-2.amazonaws.com/production/todos",
-        form,
-        {
-          headers: {
-            Authorization: `Bearer  ${localStorage.getItem("accessToken")}`,
-            "Content-Type": "application/json",
-          },
-        }
-      )
+    createTodo(data)
       .then((res) => {
-        console.log(res.data);
         setWord(!word);
       })
       .catch((error) => {
