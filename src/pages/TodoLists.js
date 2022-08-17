@@ -42,7 +42,6 @@ function TodoList({ list }) {
       setWord({ id: 0 });
     });
   };
-
   if (word.id === 0) {
     return null;
   }
@@ -72,7 +71,8 @@ function TodoList({ list }) {
         </div>
         <li className="rightBtn">
           {BtnValue ? (
-            <ViewBtn
+            <button
+              className="viewBtn"
               onClick={() => {
                 let copy = [...switchValue];
                 copy[list.id] = !copy[list.id];
@@ -82,9 +82,10 @@ function TodoList({ list }) {
               }}
             >
               수정
-            </ViewBtn>
+            </button>
           ) : (
-            <ViewBtn
+            <button
+              className="viewBtn"
               onClick={() => {
                 let copy = [...switchValue];
                 copy[list.id] = !copy[list.id];
@@ -95,10 +96,18 @@ function TodoList({ list }) {
               }}
             >
               제출
-            </ViewBtn>
+            </button>
           )}
-          {isDone && <CancleBtn onClick={cancle}>취소</CancleBtn>}
-          {BtnValue && <DeleteBtn onClick={onDel}>삭제</DeleteBtn>}
+          {isDone && (
+            <button className="cancleBtn" onClick={cancle}>
+              취소
+            </button>
+          )}
+          {BtnValue && (
+            <button className="deleteBtn" onClick={onDel}>
+              삭제
+            </button>
+          )}
         </li>
       </ul>
     </Todolist>
@@ -134,40 +143,28 @@ const Todolist = styled.div`
     text-align: left;
     margin: 10 0px;
   }
-`;
-const ViewBtn = styled.button`
-  border: none;
-  border-radius: 20px;
-  width: 50px;
-  height: 30px;
-  color: white;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  background-color: #ffdba4;
-  margin-right: 10px;
-`;
-const CancleBtn = styled.button`
-  border: none;
-  border-radius: 20px;
-  width: 50px;
-  height: 30px;
-  color: white;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  background-color: #ffe9ae;
-`;
-const DeleteBtn = styled.button`
-  border: none;
-  border-radius: 20px;
-  width: 50px;
-  height: 30px;
-  color: white;
-  font-size: 15px;
-  font-weight: bold;
-  cursor: pointer;
-  background-color: #ffe9ae;
+  .viewBtn,
+  .cancleBtn,
+  .deleteBtn {
+    border: none;
+    border-radius: 20px;
+    width: 50px;
+    height: 30px;
+    color: white;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .viewBtn {
+    background-color: #ffdba4;
+    margin-right: 10px;
+  }
+  .cancleBtn {
+    background-color: #ffe9ae;
+  }
+  .deleteBtn {
+    background-color: #ffe9ae;
+  }
 `;
 
 export default TodoList;

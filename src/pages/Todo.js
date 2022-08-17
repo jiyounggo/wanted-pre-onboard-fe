@@ -52,9 +52,11 @@ function Todo() {
       <div className="list">
         <Header>
           {token ? (
-            <button onClick={logout}>logout</button>
+            <button className="logOutBtn" onClick={logout}>
+              logout
+            </button>
           ) : (
-            <button>login</button>
+            <button className="logInBtn">login</button>
           )}
         </Header>
         <div className="top">
@@ -79,7 +81,8 @@ function Todo() {
 const Header = styled.div`
   display: flex;
   justify-content: flex-end;
-  button {
+  .logInBtn,
+  .logOutBtn {
     border: 1px solid white;
     border-radius: 10px;
     width: 100px;
