@@ -2,89 +2,115 @@ import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import TodoList from "./TodoLists";
-import { getTodos, createTodo } from "../api";
+import { getTodos, createTodo } from "../apis/todo";
 function Todo() {
   const [value, setValue] = useState([]);
-  const [listVal, setListVal] = useState();
+  const [listVal, setListVal] = useState("");
   const [word, setWord] = useState(true);
 
+  const token = localStorage.getItem("accessToken");
   const navigate = useNavigate();
   const inputRef = useRef();
 
   useEffect(() => {
     inputRef.current.focus();
+    if (!token) {
+      navigate("/");
+    }
   }, []);
-
-  //리다이렉트
-  if (localStorage.getItem("accessToken") == null) {
-    alert("로그인 해주세요!");
-    navigate("/");
-  }
 
   const inputTest = (e) => {
     setListVal(e.target.value);
   };
 
+  //로그아웃
+  const logout = () => {
+    localStorage.clear();
+    navigate("/");
+  };
   //get 요청
   useEffect(() => {
-    getTodos()
-      .then((res) => {
-        setValue(res.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    getTodos().then((res) => {
+      setValue(res.data);
+    });
   }, [word]);
 
   //post 요청
   const onSubmit = (e) => {
     inputRef.current.focus();
     e.preventDefault();
-    setListVal("");
+
     const data = {
       todo: listVal,
     };
-    e.preventDefault();
-    createTodo(data)
-      .then((res) => {
-        setWord(!word);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    createTodo(data).then((res) => {
+      setWord(!word);
+    });
   };
 
   return (
     <Todolist>
       <div className="list">
+        <Header>
+          {token ? (
+            <button onClick={logout}>logout</button>
+          ) : (
+            <button>login</button>
+          )}
+        </Header>
         <div className="top">
           <h2>Todolist</h2>
           <form onChange={inputTest}>
-            <input ref={inputRef} value={listVal}></input>
-            <button onClick={onSubmit}>추가</button>
+            <input ref={inputRef} defaultValue={listVal}></input>
+            <button className="submitBtn" onClick={onSubmit}>
+              추가
+            </button>
           </form>
         </div>
-
-        <table>
-          <tbody>
-            {value.map((list) => (
-              <TodoList list={list} />
-            ))}
-          </tbody>
-        </table>
+        <div className="itemList">
+          {value.map((list) => (
+            <TodoList key={list.id} list={list} />
+          ))}
+        </div>
       </div>
     </Todolist>
   );
 }
+
+const Header = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  button {
+    border: 1px solid white;
+    border-radius: 10px;
+    width: 100px;
+    height: 30px;
+  }
+`;
 const Todolist = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #c1efff;
   .list {
+    width: 770px;
+    height: 600px;
     display: flex;
-    justify-content: center;
     flex-direction: column;
-    align-items: center;
-    max-width: 800px;
-    margin: 0 auto;
-    min-height: 90vh;
+    justify-content: center;
+    text-align: center;
+    font-family: system-ui, serif;
+    font-size: 2rem;
+    padding: 2.5rem;
+    border-radius: 10px;
+    background: white;
+    padding: 30px;
+  }
+  .itemList {
+    padding: 20px 32px 48px;
+    overflow-y: auto;
   }
   .top {
     display: flex;
@@ -101,18 +127,19 @@ const Todolist = styled.div`
       padding-left: 10px;
       background-color: rgb(233, 233, 233);
     }
-    button {
+    .submitBtn {
       margin-left: 15px;
-      border: 1px solid grey;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      border: 1px solid white;
+      border-radius: 10px;
       font-weight: 600;
-      color: pink;
+      color: white;
+      background: #ffb3b3;
       padding: 10px;
+      box-shadow: 1px 2px 5px grey;
     }
   }
   table {
     margin: 0 auto;
-    border: 0.5px solid pink;
     border-collapse: collapse;
   }
 `;

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import { updataTodo, deleteTodo } from "../api";
+import { updataTodo, deleteTodo } from "../apis/todo";
 
 function TodoList({ list }) {
   const [isDone, setisDone] = useState(false);
@@ -31,24 +31,16 @@ function TodoList({ list }) {
       todo: editVal,
       isCompleted: true,
     };
-    updataTodo(data, word)
-      .then((res) => {
-        setlist(res.data.todo);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    updataTodo(data, word).then((res) => {
+      setlist(res.data.todo);
+    });
   };
 
   //삭제
   const onDel = async (e) => {
-    deleteTodo(word)
-      .then((res) => {
-        setWord({ id: 0 });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    deleteTodo(word).then((res) => {
+      setWord({ id: 0 });
+    });
   };
 
   if (word.id === 0) {
@@ -57,7 +49,7 @@ function TodoList({ list }) {
 
   return (
     <Todolist>
-      <ul key={list.id} className={inputVal ? "show" : ""}>
+      <ul className={inputVal ? "show" : ""}>
         <li>
           <input
             className="checkbox"
@@ -68,12 +60,16 @@ function TodoList({ list }) {
         </li>
         <div className="text">
           {switchValue[list.id] ? (
-            <input onChange={inputTxt} defaultValue={listitem}></input>
+            <input
+              type="text"
+              onChange={inputTxt}
+              defaultValue={listitem}
+            ></input>
           ) : (
             <p>{listitem}</p>
           )}
         </div>
-        <li>
+        <li className="rightBtn">
           {BtnValue ? (
             <ViewBtn
               onClick={() => {
@@ -100,22 +96,23 @@ function TodoList({ list }) {
               제출
             </ViewBtn>
           )}
-          {isDone ? <CancleBtn onClick={cancle}>취소</CancleBtn> : null}
-          {BtnValue ? <DeleteBtn onClick={onDel}>삭제</DeleteBtn> : null}
+          {isDone && <CancleBtn onClick={cancle}>취소</CancleBtn>}
+          {BtnValue && <DeleteBtn onClick={onDel}>삭제</DeleteBtn>}
         </li>
       </ul>
     </Todolist>
   );
 }
 const Todolist = styled.div`
+  magin: 0 auto;
   .show {
+    display: flex;
     text-decoration: line-through;
     text-decoration-color: pink;
   }
   ul {
-    border: 1.3px solid pink;
     display: flex;
-    align-items: center;
+    justify-content: center;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -124,20 +121,53 @@ const Todolist = styled.div`
     accent-color: pink;
   }
   .text {
-    width: 500px;
-
+    width: 400px;
+    height: 25px;
     p {
-      margin: 0;
+      font-size: 18px;
+      text-align: left;
+      margin: 10 0px;
     }
     input {
-      width: 450px;
-      height: 20px;
-      font-size: 1em;
+      width: 350px;
+      height: 22px;
+      font-size: 18px;
     }
   }
 `;
-const ViewBtn = styled.button``;
-const CancleBtn = styled.button``;
-const DeleteBtn = styled.button``;
+const ViewBtn = styled.button`
+  border: none;
+  border-radius: 20px;
+  width: 50px;
+  height: 30px;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #ffdba4;
+  margin-right: 10px;
+`;
+const CancleBtn = styled.button`
+  border: none;
+  border-radius: 20px;
+  width: 50px;
+  height: 30px;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #ffe9ae;
+`;
+const DeleteBtn = styled.button`
+  border: none;
+  border-radius: 20px;
+  width: 50px;
+  height: 30px;
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #ffe9ae;
+`;
 
 export default TodoList;
