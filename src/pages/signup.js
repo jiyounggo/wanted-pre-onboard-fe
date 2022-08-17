@@ -1,7 +1,6 @@
-import axios from "axios";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { signUp } from "../api";
+import { signUp } from "../apis/auth";
 import styled from "@emotion/styled";
 
 function SignUp() {
@@ -11,7 +10,6 @@ function SignUp() {
     signupId: "",
     signupPw: "",
   });
-
   const { signupId, signupPw } = input;
 
   const onChangeInput = (e) => {
@@ -23,7 +21,7 @@ function SignUp() {
   };
 
   //ID,PW 유효성 검사
-  const loginValid = input.signupId.includes("@") && input.signupPw.length >= 8;
+  const loginValid = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
   const emailValid = input.signupId.includes("@");
   const pwValud = input.signupPw.length >= 8;
 
@@ -37,7 +35,7 @@ function SignUp() {
     signUp(data)
       .then((res) => {
         localStorage.setItem("accessToken", res.data.access_token);
-        navigate("/signin");
+        navigate("/todo");
       })
       .catch((Error) => {
         console.log(Error);
@@ -46,44 +44,49 @@ function SignUp() {
 
   return (
     <Signup>
-      <div className="top">
-        <h2>sign in</h2>
-        <input
-          name="signupId"
-          type="text"
-          onChange={onChangeInput}
-          placeholder="e-mail"
-          value={signupId}
-        />
-        <input
-          name="signupPw"
-          type="password"
-          onChange={onChangeInput}
-          placeholder="password"
-          value={signupPw}
-        />
+      <div className="content">
+        <div className="top">
+          <h2>Sign Up</h2>
+          <input
+            name="signupId"
+            type="text"
+            onChange={onChangeInput}
+            placeholder="e-mail"
+            value={signupId}
+          />
+          <input
+            name="signupPw"
+            type="password"
+            onChange={onChangeInput}
+            placeholder="password"
+            value={signupPw}
+          />
+        </div>
+        <div className="middle">
+          {(() => {
+            if (input.signupId.length < 1 && input.signupPw.length < 1) {
+              return null;
+            } else if (!emailValid) {
+              return <p>이메일은 @ 가 포함되어야 합니다</p>;
+            } else if (!pwValud) {
+              return <p>비밀번호는 8글자 이상 이여야 합니다</p>;
+            } else {
+              <p></p>;
+            }
+          })()}
+        </div>
+        <div className="signBtn">
+          <button
+            className={loginValid ? "onClick" : "unClick"}
+            onClick={submitsignup}
+          >
+            가입하기
+          </button>
+        </div>
+        <Link to="/signin">
+          <p className="bottom">로그인 하러 가기</p>
+        </Link>
       </div>
-      <div className="middle">
-        {!emailValid ? (
-          <p>이메일은 @ 가 포함되어야 합니다</p>
-        ) : !pwValud ? (
-          <p>비밀번호는 8글자 이상 이여야 합니다</p>
-        ) : (
-          <p></p>
-        )}
-      </div>
-      <div className="signBtn">
-        <button
-          className={loginValid ? "onClick" : "unClick"}
-          onClick={submitsignup}
-        >
-          가입하기
-        </button>
-      </div>
-
-      <Link to="/signin">
-        <p className="bottom">로그인 하러 가기</p>
-      </Link>
     </Signup>
   );
 }
@@ -94,11 +97,20 @@ const Signup = styled.div`
   align-items: center;
   min-height: 90vh;
   flex-direction: column;
-  .top {
+  min-height: 100vh;
+  background: #c1efff;
+  .content {
+    width: 250px;
+    height: 300px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     text-align: center;
+    border-radius: 10px;
+    background: white;
+    padding: 40px;
   }
+
   .middle {
     height: 50px;
     p {
@@ -106,16 +118,18 @@ const Signup = styled.div`
       color: red;
     }
   }
-
   .onClick {
     background-color: pink;
     cursor: pointer;
-    border: 1px solid white;
+    border: none;
     padding: 5px;
+    border-radius: 10px;
   }
   .unClick {
     pointer-events: none;
-    boder: 1px solid black;
+    border: none;
+    padding: 5px;
+    border-radius: 10px;
   }
   .bottom {
     font-size: 13px;
