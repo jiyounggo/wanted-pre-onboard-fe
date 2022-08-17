@@ -62,7 +62,12 @@ function Todo() {
         <div className="top">
           <h2>Todolist</h2>
           <form onChange={inputTest}>
-            <input className="search" ref={inputRef} value={listVal}></input>
+            <input
+              onChange={inputTest}
+              className="search"
+              ref={inputRef}
+              value={listVal}
+            ></input>
             <button className="submitBtn" onClick={onSubmit}>
               추가
             </button>
