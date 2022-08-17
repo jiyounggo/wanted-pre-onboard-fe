@@ -61,12 +61,13 @@ function TodoList({ list }) {
         <div className="text">
           {switchValue[list.id] ? (
             <input
+              className="txtInput"
               type="text"
               onChange={inputTxt}
               defaultValue={listitem}
             ></input>
           ) : (
-            <p>{listitem}</p>
+            <p className="listTxt">{listitem}</p>
           )}
         </div>
         <li className="rightBtn">
@@ -104,7 +105,6 @@ function TodoList({ list }) {
   );
 }
 const Todolist = styled.div`
-  magin: 0 auto;
   .show {
     display: flex;
     text-decoration: line-through;
@@ -123,16 +123,16 @@ const Todolist = styled.div`
   .text {
     width: 400px;
     height: 25px;
-    p {
-      font-size: 18px;
-      text-align: left;
-      margin: 10 0px;
-    }
-    input {
-      width: 350px;
-      height: 22px;
-      font-size: 18px;
-    }
+  }
+  .txtInput {
+    width: 350px;
+    height: 22px;
+    font-size: 18px;
+  }
+  .listTxt {
+    font-size: 18px;
+    text-align: left;
+    margin: 10 0px;
   }
 `;
 const ViewBtn = styled.button`

@@ -29,20 +29,10 @@ function Signin() {
       password: input.signinPw,
     };
     e.preventDefault();
-    signIn(data)
-      .then((res) => {
-        localStorage.setItem("accessToken", res.data.access_token);
-        navigate("/todo");
-      })
-      .catch((error) => {
-        if (error.request.status === 404) {
-          alert("유효하지 않는 사용자 입니다.");
-        } else if (error.request.status === 401) {
-          alert("사용자 정보가 일치하지 않습니다.");
-        } else {
-          alert("다시 확인해 주세요.");
-        }
-      });
+    signIn(data).then((res) => {
+      localStorage.setItem("accessToken", res.data.access_token);
+      navigate("/todo");
+    });
   };
 
   return (

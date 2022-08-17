@@ -4,11 +4,12 @@ import styled from "@emotion/styled";
 
 function Main() {
   const navigate = useNavigate();
+  const token = localStorage.getItem("accessToken");
 
   useEffect(() => {
-    if (localStorage.getItem("accessToken")) {
+    if (token) {
       navigate("/todo");
-    } else if (!localStorage.getItem("accessToken")) {
+    } else if (!token) {
       navigate("/");
     }
   }, []);

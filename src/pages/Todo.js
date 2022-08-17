@@ -18,11 +18,9 @@ function Todo() {
       navigate("/");
     }
   }, []);
-
   const inputTest = (e) => {
     setListVal(e.target.value);
   };
-
   //로그아웃
   const logout = () => {
     localStorage.clear();
@@ -45,6 +43,7 @@ function Todo() {
     };
     createTodo(data).then((res) => {
       setWord(!word);
+      setListVal("");
     });
   };
 
@@ -61,7 +60,7 @@ function Todo() {
         <div className="top">
           <h2>Todolist</h2>
           <form onChange={inputTest}>
-            <input ref={inputRef} defaultValue={listVal}></input>
+            <input className="search" ref={inputRef} value={listVal}></input>
             <button className="submitBtn" onClick={onSubmit}>
               추가
             </button>
@@ -85,6 +84,7 @@ const Header = styled.div`
     border-radius: 10px;
     width: 100px;
     height: 30px;
+    cursor: pointer;
   }
 `;
 const Todolist = styled.div`
@@ -95,13 +95,9 @@ const Todolist = styled.div`
   min-height: 100vh;
   background: #c1efff;
   .list {
+    overflow-y: auto;
     width: 770px;
     height: 600px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    font-family: system-ui, serif;
     font-size: 2rem;
     padding: 2.5rem;
     border-radius: 10px;
@@ -110,37 +106,33 @@ const Todolist = styled.div`
   }
   .itemList {
     padding: 20px 32px 48px;
-    overflow-y: auto;
   }
   .top {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-bottom: 20px;
-    input {
-      width: 400px;
-      height: 32px;
-      font-size: 15px;
-      border: 0;
-      border-radius: 15px;
-      outline: none;
-      padding-left: 10px;
-      background-color: rgb(233, 233, 233);
-    }
-    .submitBtn {
-      margin-left: 15px;
-      border: 1px solid white;
-      border-radius: 10px;
-      font-weight: 600;
-      color: white;
-      background: #ffb3b3;
-      padding: 10px;
-      box-shadow: 1px 2px 5px grey;
-    }
   }
-  table {
-    margin: 0 auto;
-    border-collapse: collapse;
+  .search {
+    width: 400px;
+    height: 32px;
+    font-size: 15px;
+    border: 0;
+    border-radius: 15px;
+    outline: none;
+    padding-left: 10px;
+    background-color: rgb(233, 233, 233);
+  }
+  .submitBtn {
+    margin-left: 15px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    font-weight: 600;
+    color: white;
+    background: #ffb3b3;
+    padding: 10px;
+    box-shadow: 1px 2px 5px grey;
+    cursor: pointer;
   }
 `;
 

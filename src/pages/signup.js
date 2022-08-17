@@ -21,7 +21,7 @@ function SignUp() {
   };
 
   //ID,PW 유효성 검사
-  const loginValid = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+  const loginValid = input.signupId.includes("@") && input.signupPw.length >= 8;
   const emailValid = input.signupId.includes("@");
   const pwValud = input.signupPw.length >= 8;
 
