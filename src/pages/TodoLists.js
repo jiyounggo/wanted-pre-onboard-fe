@@ -4,6 +4,7 @@ import { updataTodo, deleteTodo } from "../apis/todo";
 
 function TodoList({ list }) {
   const [isDone, setisDone] = useState(false);
+  const [isShow, setIsShow] = useState(list.isCompleted);
   const [switchValue, setSwitchValue] = useState([]);
   const [BtnValue, setBtnValue] = useState(true);
   const [editVal, setEditVal] = useState("");
@@ -11,9 +12,9 @@ function TodoList({ list }) {
   const [listitem, setlist] = useState(list.todo);
   const [inputVal, setinputVal] = useState(list.isCompleted);
 
-  const formEdit = () => {
-    setinputVal(!inputVal);
-  };
+  // const formEdit = () => {
+  //   setinputVal(!inputVal);
+  // };
   const inputTxt = (e) => {
     setEditVal(e.target.value);
   };
@@ -25,13 +26,27 @@ function TodoList({ list }) {
     setSwitchValue([false]);
   };
 
+  //check box
+  const updateCheck = async (e) => {
+    setinputVal(!inputVal);
+    const data = {
+      todo: listitem,
+      isCompleted: !isShow,
+    };
+    updataTodo(data, word).then((res) => {
+      console.log(res);
+      setlist(res.data.todo);
+    });
+  };
+
   //수정
   const onEdit = async (e) => {
     const data = {
       todo: editVal,
-      isCompleted: true,
+      isCompleted: isShow,
     };
     updataTodo(data, word).then((res) => {
+      console.log(res);
       setlist(res.data.todo);
     });
   };
@@ -54,7 +69,7 @@ function TodoList({ list }) {
             className="checkbox"
             type="checkbox"
             checked={inputVal}
-            onChange={formEdit}
+            onChange={updateCheck}
           />
         </li>
         <div className="text">
