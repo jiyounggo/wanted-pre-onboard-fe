@@ -46,7 +46,7 @@ function SignUp() {
     <Signup>
       <div className="content">
         <div className="top">
-          <h2>Sign Up</h2>
+          <h2>Signd Up</h2>
           <input
             name="signupId"
             type="text"

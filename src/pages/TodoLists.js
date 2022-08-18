@@ -12,9 +12,6 @@ function TodoList({ list }) {
   const [listitem, setlist] = useState(list.todo);
   const [inputVal, setinputVal] = useState(list.isCompleted);
 
-  // const formEdit = () => {
-  //   setinputVal(!inputVal);
-  // };
   const inputTxt = (e) => {
     setEditVal(e.target.value);
   };

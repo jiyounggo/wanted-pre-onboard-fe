@@ -1,4 +1,4 @@
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Main from "./pages/Main";
 import SingUp from "./pages/Signup";
 import SingIn from "./pages/Signin";

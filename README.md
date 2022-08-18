@@ -1,8 +1,9 @@
 # ✍️test 원티드 프리온보딩 프론트엔드 - 선발 과제
 
-원티드 프리온보딩 프론트엔드 코스에서 제공해주신 API를 이용한 프로젝트 입니다.
+원티드 프리온보딩 프론트엔드 코스에서 제공해주신
+API를 이용한 프로젝트 입니다.
 
-<img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"/> <img src="https://img.shields.io/badge/JavaScript-FDB515?style=flat-square&logo=JavaScript&logoColor=white"/> <img src="https://img.shields.io/badge/CSS3-1572B6B?style=flat-square&logo=CSS3&logoColor=white" /> <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=HTML5&logoColor=white"/>
+<img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"/> <img src="https://img.shields.io/badge/JavaScript-FDB515?style=flat-square&logo=JavaScript&logoColor=white"/> <img src="https://img.shields.io/badge/emotion-ff69b4"/>
 
 ## 실행방법
 
@@ -27,9 +28,9 @@ npm start
 
 ### 투두 리스트
 
-| 글쓰기                                                                                                             | 글수정                                                                                                             | 글삭제                                                                                                             |
-| ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
-| ![글 추가](https://user-images.githubusercontent.com/103088450/185098289-31afbce7-e943-4ac6-8d05-863a5184c6e4.gif) | ![글 수정](https://user-images.githubusercontent.com/103088450/185098327-675d7217-34c6-499a-b9c1-a1bbec819828.gif) | ![글 삭제](https://user-images.githubusercontent.com/103088450/185098330-ac3749c2-5f34-4021-a7e8-d90d476f1a84.gif) |
+| 글쓰기                                                                                                             | 글수정                                                                                                            | 글삭제                                                                                                             |
+| ------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| ![글 추가](https://user-images.githubusercontent.com/103088450/185098289-31afbce7-e943-4ac6-8d05-863a5184c6e4.gif) | ![글수정](https://user-images.githubusercontent.com/103088450/185159276-1fdb7f6b-5e55-433d-8cb6-a8e58b637840.gif) | ![글 삭제](https://user-images.githubusercontent.com/103088450/185098330-ac3749c2-5f34-4021-a7e8-d90d476f1a84.gif) |
 
 ## 구현 기능
 
@@ -39,7 +40,6 @@ npm start
   - 이메일/비밀번호 유효성 확인(이메일 조건: @ 포함비밀번호 조건: 8자 이상)
   - 입력된 이메일과 비밀번호가 유효성검사를 통과 할때만 버튼이 활성화
   - 유효성 검사를 통과하지 않으면 아래에 경고 문구 표시
-  - 회원가입 페이지에 비밀번호 일치 확인 기능 추가
   - 로그인 API를 호출하고, 올바른 응답을 받았을 때 /todo 경로로 이동
   - 로그인 유무에 따른 리다이렉트
   - 로그아웃 기능 추가
