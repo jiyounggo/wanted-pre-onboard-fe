@@ -32,14 +32,10 @@ function SignUp() {
       password: input.signupPw,
     };
     e.preventDefault();
-    signUp(data)
-      .then((res) => {
-        localStorage.setItem("accessToken", res.data.access_token);
-        navigate("/todo");
-      })
-      .catch((Error) => {
-        console.log(Error);
-      });
+    signUp(data).then((res) => {
+      localStorage.setItem("accessToken", res.data.access_token);
+      navigate("/todo");
+    });
   };
 
   return (
@@ -122,13 +118,13 @@ const Signup = styled.div`
     background-color: pink;
     cursor: pointer;
     border: none;
-    padding: 5px;
+    padding: 5px 55px;
     border-radius: 10px;
   }
   .unClick {
     pointer-events: none;
     border: none;
-    padding: 5px;
+    padding: 5px 55px;
     border-radius: 10px;
   }
   .bottom {

@@ -12,6 +12,9 @@ export const signUp = async (data) => {
     });
     return response;
   } catch (error) {
+    if (error.request.status === 400) {
+      alert("이미 존재하는 이메일 입니다.");
+    }
     console.error(error);
   }
 };
@@ -31,8 +34,6 @@ export const signIn = async (data) => {
       alert("존재하지 않는 이메일 입니다.");
     } else if (error.request.status === 401) {
       alert("사용자 정보가 일치하지 않습니다.");
-    } else {
-      alert("다시 확인해 주세요.");
     }
   }
 };
