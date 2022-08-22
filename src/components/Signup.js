@@ -21,15 +21,15 @@ function SignUp() {
   };
 
   //ID,PW 유효성 검사
-  const loginValid = input.signupId.includes("@") && input.signupPw.length >= 8;
-  const emailValid = input.signupId.includes("@");
-  const pwValud = input.signupPw.length >= 8;
+  const loginValid = signupId.includes("@") && signupPw.length >= 8;
+  const emailValid = signupId.includes("@");
+  const pwValud = signupPw.length >= 8;
 
   //회원가입 요청
   const submitsignup = async (e) => {
     const data = {
-      email: input.signupId,
-      password: input.signupPw,
+      email: signupId,
+      password: signupPw,
     };
     e.preventDefault();
     signUp(data).then((res) => {
@@ -60,7 +60,7 @@ function SignUp() {
         </div>
         <div className="middle">
           {(() => {
-            if (input.signupId.length < 1 && input.signupPw.length < 1) {
+            if (signupId.length < 1 && signupPw.length < 1) {
               return null;
             } else if (!emailValid) {
               return <p>이메일은 @ 가 포함되어야 합니다</p>;

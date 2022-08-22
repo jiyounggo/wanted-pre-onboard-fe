@@ -1,8 +1,8 @@
 import { Routes, Route } from "react-router-dom";
-import Main from "./pages/Main";
-import SingUp from "./pages/Signup";
-import SingIn from "./pages/Signin";
-import Todo from "./pages/Todo";
+import Main from "./components/Main";
+import SingUp from "./components/Signup";
+import SingIn from "./components/Signin";
+import Todo from "./components/Todo";
 function App() {
   return (
     <>

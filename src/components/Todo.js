@@ -12,15 +12,18 @@ function Todo() {
   const navigate = useNavigate();
   const inputRef = useRef();
 
+  //로그인 유무 리다이렉트
   useEffect(() => {
     inputRef.current.focus();
     if (!token) {
       navigate("/");
     }
   }, []);
+
   const inputTest = (e) => {
     setListVal(e.target.value);
   };
+
   //로그아웃
   const logout = () => {
     localStorage.clear();

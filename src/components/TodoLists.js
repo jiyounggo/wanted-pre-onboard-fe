@@ -4,7 +4,6 @@ import { updataTodo, deleteTodo } from "../apis/todo";
 
 function TodoList({ list }) {
   const [isDone, setisDone] = useState(false);
-  const [isShow, setIsShow] = useState(list.isCompleted);
   const [switchValue, setSwitchValue] = useState([]);
   const [BtnValue, setBtnValue] = useState(true);
   const [editVal, setEditVal] = useState("");
@@ -28,7 +27,7 @@ function TodoList({ list }) {
     setinputVal(!inputVal);
     const data = {
       todo: listitem,
-      isCompleted: !isShow,
+      isCompleted: !inputVal,
     };
     updataTodo(data, word).then((res) => {
       console.log(res);
@@ -40,7 +39,7 @@ function TodoList({ list }) {
   const onEdit = async (e) => {
     const data = {
       todo: editVal,
-      isCompleted: isShow,
+      isCompleted: inputVal,
     };
     updataTodo(data, word).then((res) => {
       console.log(res);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import { signIn } from "../apis/auth";
 import { useNavigate, Link } from "react-router-dom";
@@ -25,8 +25,8 @@ function Signin() {
   //로그인 요청
   const submitsignin = async (e) => {
     const data = {
-      email: input.signinId,
-      password: input.signinPw,
+      email: signinId,
+      password: signinPw,
     };
     e.preventDefault();
     signIn(data).then((res) => {
