@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { signIn } from "../apis/auth";
+import React from "react";
+import { signIn } from "../../apis/auth";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "@emotion/styled";
-import useInputs from "../hooks/useInputs";
+import useInputs from "../../hooks/useInputs";
 
 function Signin() {
   const navigate = useNavigate();

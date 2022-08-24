@@ -2,15 +2,15 @@ import React, { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import TodoList from "./TodoLists";
-import { getTodos, createTodo } from "../apis/todo";
+import { getTodos, createTodo } from "../../apis/todo";
 function Todo() {
   const [value, setValue] = useState([]);
   const [listVal, setListVal] = useState("");
   const [word, setWord] = useState(true);
+  const inputRef = useRef();
 
   const token = localStorage.getItem("accessToken");
   const navigate = useNavigate();
-  const inputRef = useRef();
 
   //로그인 유무 리다이렉트
   useEffect(() => {

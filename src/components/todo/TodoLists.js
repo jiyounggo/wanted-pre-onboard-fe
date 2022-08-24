@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "@emotion/styled";
-import { updataTodo, deleteTodo } from "../apis/todo";
+import { updataTodo, deleteTodo } from "../../apis/todo";
 
 function TodoList({ list }) {
   const [isDone, setisDone] = useState(false);

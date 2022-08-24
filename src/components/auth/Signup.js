@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { signUp } from "../apis/auth";
+import { signUp } from "../../apis/auth";
 import styled from "@emotion/styled";
-import useInputs from "../hooks/useInputs";
+import useInputs from "../../hooks/useInputs";
 
 function SignUp() {
   const navigate = useNavigate();
