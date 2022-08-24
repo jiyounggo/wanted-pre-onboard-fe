@@ -2,23 +2,17 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { signUp } from "../apis/auth";
 import styled from "@emotion/styled";
+import useInputs from "../hooks/useInputs";
 
 function SignUp() {
   const navigate = useNavigate();
 
-  const [input, setInput] = useState({
+  const [input, onChange] = useInputs({
     signupId: "",
     signupPw: "",
   });
-  const { signupId, signupPw } = input;
 
-  const onChangeInput = (e) => {
-    const { name, value } = e.target;
-    setInput({
-      ...input,
-      [name]: value,
-    });
-  };
+  const { signupId, signupPw } = input;
 
   //ID,PW 유효성 검사
   const loginValid = signupId.includes("@") && signupPw.length >= 8;
@@ -46,14 +40,14 @@ function SignUp() {
           <input
             name="signupId"
             type="text"
-            onChange={onChangeInput}
+            onChange={onChange}
             placeholder="e-mail"
             value={signupId}
           />
           <input
             name="signupPw"
             type="password"
-            onChange={onChangeInput}
+            onChange={onChange}
             placeholder="password"
             value={signupPw}
           />

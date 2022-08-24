@@ -3,24 +3,17 @@ import { useState } from "react";
 import { signIn } from "../apis/auth";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "@emotion/styled";
+import useInputs from "../hooks/useInputs";
 
 function Signin() {
   const navigate = useNavigate();
 
-  const [input, setInput] = useState({
+  const [input, onChange] = useInputs({
     signinId: "",
     signinPw: "",
   });
 
   const { signinId, signinPw } = input;
-
-  const onChangeInput = (e) => {
-    const { name, value } = e.target;
-    setInput({
-      ...input,
-      [name]: value,
-    });
-  };
 
   //로그인 요청
   const submitsignin = async (e) => {
@@ -43,14 +36,14 @@ function Signin() {
           <input
             name="signinId"
             type="text"
-            onChange={onChangeInput}
+            onChange={onChange}
             placeholder="e-mail"
             value={signinId}
           />
           <input
             name="signinPw"
             type="password"
-            onChange={onChangeInput}
+            onChange={onChange}
             placeholder="password"
             value={signinPw}
           />
