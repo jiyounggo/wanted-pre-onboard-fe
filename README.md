@@ -1,7 +1,5 @@
 # ✍️test 원티드 프리온보딩 프론트엔드 - 선발 과제
 
-원티드 프리온보딩 프론트엔드 코스에서 제공해주신
-API를 이용한 프로젝트 입니다.
 
 <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white"/> <img src="https://img.shields.io/badge/JavaScript-FDB515?style=flat-square&logo=JavaScript&logoColor=white"/> <img src="https://img.shields.io/badge/emotion-ff69b4"/>
 
