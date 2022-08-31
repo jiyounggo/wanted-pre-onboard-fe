@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, memo, useMemo } from "react";
 import styled from "@emotion/styled";
 import { updataTodo, deleteTodo } from "../../apis/todo";
 
 function TodoList({ list }) {
+  console.log("자녀도");
   const [isDone, setisDone] = useState(false);
   const [switchValue, setSwitchValue] = useState([]);
   const [BtnValue, setBtnValue] = useState(true);
@@ -176,4 +177,4 @@ const Todolist = styled.div`
   }
 `;
 
-export default TodoList;
+export default memo(TodoList);

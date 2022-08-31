@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import TodoList from "./TodoLists";
@@ -8,12 +8,13 @@ function Todo() {
   const [listVal, setListVal] = useState("");
   const [word, setWord] = useState(true);
   const inputRef = useRef();
-
+  console.log("부모");
   const token = localStorage.getItem("accessToken");
   const navigate = useNavigate();
 
   //로그인 유무 리다이렉트
   useEffect(() => {
+    //input focus적용
     inputRef.current.focus();
     if (!token) {
       navigate("/");
@@ -40,7 +41,6 @@ function Todo() {
   const onSubmit = (e) => {
     inputRef.current.focus();
     e.preventDefault();
-
     const data = {
       todo: listVal,
     };
