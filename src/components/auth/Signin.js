@@ -3,6 +3,7 @@ import { signIn } from "../../apis/auth";
 import { useNavigate, Link } from "react-router-dom";
 import styled from "@emotion/styled";
 import useInputs from "../../hooks/useInputs";
+import { checkEmail, checkPassword } from "../../utils/checkValid";
 
 function Signin() {
   const navigate = useNavigate();
@@ -48,7 +49,16 @@ function Signin() {
           />
         </div>
         <div className="signBtn">
-          <button onClick={submitsignin}>로그인</button>
+          <button
+            className={
+              checkEmail(signinId) && checkPassword(signinPw)
+                ? "onClick"
+                : "unClick"
+            }
+            onClick={submitsignin}
+          >
+            로그인
+          </button>
         </div>
         <Link to="/signup">
           <p className="bottom">회원가입 하러 가기</p>
@@ -79,7 +89,6 @@ const SignIn = styled.div`
     padding: 40px;
   }
   .signBtn button {
-    background-color: pink;
     cursor: pointer;
     border: none;
     padding: 5px;
@@ -89,6 +98,19 @@ const SignIn = styled.div`
   }
   .bottom {
     font-size: 13px;
+  }
+  .onClick {
+    background-color: pink;
+    cursor: pointer;
+    border: none;
+    padding: 5px 55px;
+    border-radius: 10px;
+  }
+  .unClick {
+    pointer-events: none;
+    border: none;
+    padding: 5px 55px;
+    border-radius: 10px;
   }
 `;
 

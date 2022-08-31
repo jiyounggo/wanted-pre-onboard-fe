@@ -2,6 +2,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { signUp } from "../../apis/auth";
 import styled from "@emotion/styled";
 import useInputs from "../../hooks/useInputs";
+import { checkEmail, checkPassword } from "../../utils/checkValid";
 
 function SignUp() {
   const navigate = useNavigate();
@@ -12,11 +13,6 @@ function SignUp() {
   });
 
   const { signupId, signupPw } = input;
-
-  //ID,PW 유효성 검사
-  const loginValid = signupId.includes("@") && signupPw.length >= 8;
-  const emailValid = signupId.includes("@");
-  const pwValud = signupPw.length >= 8;
 
   //회원가입 요청
   const submitsignup = async (e) => {
@@ -55,18 +51,20 @@ function SignUp() {
           {(() => {
             if (signupId.length < 1 && signupPw.length < 1) {
               return null;
-            } else if (!emailValid) {
-              return <p>이메일은 @ 가 포함되어야 합니다</p>;
-            } else if (!pwValud) {
-              return <p>비밀번호는 8글자 이상 이여야 합니다</p>;
-            } else {
-              <p></p>;
+            } else if (!checkEmail(signupId)) {
+              return <p>이메일 형식이 맞지 않습니다.</p>;
+            } else if (!checkPassword(signupPw)) {
+              return <p>비밀번호는 8글자 이상 이여야 합니다.</p>;
             }
           })()}
         </div>
         <div className="signBtn">
           <button
-            className={loginValid ? "onClick" : "unClick"}
+            className={
+              checkEmail(signupId) && checkPassword(signupPw)
+                ? "onClick"
+                : "unClick"
+            }
             onClick={submitsignup}
           >
             가입하기
