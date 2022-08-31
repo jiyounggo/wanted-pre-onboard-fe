@@ -15,7 +15,7 @@ function TodoList({ list }) {
     setEditVal(e.target.value);
   };
 
-  //취소버튼 숨기기
+  //취소버튼
   const cancle = () => {
     setBtnValue(true);
     setisDone(!isDone);
@@ -30,7 +30,6 @@ function TodoList({ list }) {
       isCompleted: !inputVal,
     };
     updataTodo(data, word).then((res) => {
-      console.log(res);
       setlist(res.data.todo);
     });
   };
@@ -42,7 +41,6 @@ function TodoList({ list }) {
       isCompleted: inputVal,
     };
     updataTodo(data, word).then((res) => {
-      console.log(res);
       setlist(res.data.todo);
     });
   };
@@ -56,6 +54,14 @@ function TodoList({ list }) {
   if (word.id === 0) {
     return null;
   }
+
+  const BtnOnclick = () => {
+    let copy = [...switchValue];
+    copy[list.id] = !copy[list.id];
+    setSwitchValue(copy);
+    setisDone(!isDone);
+    setBtnValue(!BtnValue);
+  };
 
   return (
     <Todolist>
@@ -85,11 +91,7 @@ function TodoList({ list }) {
             <button
               className="viewBtn"
               onClick={() => {
-                let copy = [...switchValue];
-                copy[list.id] = !copy[list.id];
-                setSwitchValue(copy);
-                setisDone(!isDone);
-                setBtnValue(!BtnValue);
+                BtnOnclick();
               }}
             >
               수정
@@ -98,11 +100,7 @@ function TodoList({ list }) {
             <button
               className="viewBtn"
               onClick={() => {
-                let copy = [...switchValue];
-                copy[list.id] = !copy[list.id];
-                setSwitchValue(copy);
-                setisDone(!isDone);
-                setBtnValue(!BtnValue);
+                BtnOnclick();
                 onEdit();
               }}
             >
